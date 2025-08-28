@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/* Paleta de cores personalizada da Consultec - Harmonizada com o logo */
+:root {
+  --primary-magenta: #ec4899;
+  --primary-magenta-light: #f472b6;
+  --primary-magenta-dark: #be185d;
+  --accent-purple: #8b5cf6;
+  --accent-purple-light: #a78bfa;
+  --accent-purple-dark: #7c3aed;
+  --accent-blue: #3b82f6;
+  --accent-blue-light: #60a5fa;
+  --accent-blue-dark: #2563eb;
+  --accent-pink: #f43f5e;
+  --accent-pink-light: #fb7185;
+  --accent-pink-dark: #e11d48;
+  --neutral-gray: #374151;
+  --neutral-gray-light: #6b7280;
+  --neutral-gray-dark: #111827;
+  --background-light: #f8fafc;
+  --background-white: #ffffff;
+}
+
+/* Estilos globais */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--neutral-gray);
+}
+
+/* Animações personalizadas */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+/* Gradientes personalizados - Harmonizados com o logo */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary-magenta) 0%, var(--accent-purple) 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, var(--primary-magenta) 0%, var(--accent-purple) 50%, var(--accent-blue) 100%);
+}
+
+.gradient-logo {
+  background: linear-gradient(135deg, var(--primary-magenta) 0%, var(--accent-pink) 25%, var(--accent-blue) 50%, var(--accent-purple) 100%);
+}
+
+/* Efeitos de hover personalizados */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Estilos para botões */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-magenta) 0%, var(--accent-purple) 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary-magenta);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary-magenta);
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--primary-magenta);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Cards com sombra suave */
+.card-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card-shadow:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Estilos para seções */
+.section-padding {
+  padding: 80px 0;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 60px 0;
+  }
+}
