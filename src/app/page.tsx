@@ -1,26 +1,100 @@
+'use client';
 import Image from "next/image";
-import { 
-  FaPhone, 
-  FaEnvelope, 
-  FaWhatsapp, 
-  FaMapMarkerAlt, 
-  FaCheck, 
-  FaUsers, 
-  FaChartLine, 
-  FaFileInvoiceDollar, 
-  FaBuilding, 
-  FaMoneyBillWave, 
-  FaBullseye, 
-  FaSearch, 
-  FaShieldAlt, 
-  FaUserTie, 
-  FaArrowRight, 
-  FaTwitter, 
-  FaLinkedin, 
+import { useEffect, useRef, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import {
+  FaPhone,
+  FaEnvelope,
+  FaWhatsapp,
+  FaMapMarkerAlt,
+  FaCheck,
+  FaUsers,
+  FaChartLine,
+  FaFileInvoiceDollar,
+  FaBuilding,
+  FaMoneyBillWave,
+  FaBullseye,
+  FaSearch,
+  FaShieldAlt,
+  FaUserTie,
+  FaArrowRight,
+  FaTwitter,
+  FaLinkedin,
   FaInstagram,
   FaBars,
-  FaTimes
+  FaTimes,
+  FaChevronLeft,
+  FaChevronRight,
+  FaExternalLinkAlt,
 } from "react-icons/fa";
+import NewsCarousel from "@/components/news";
+
+type NewsItem = {
+  id: string;
+  title: string;
+  description: string;
+  source_url: string;
+  created_at: string;
+};
+
+function useInViewOnce<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current || inView) return;
+    const el = ref.current;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setInView(true);
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [inView]);
+
+  return { ref, inView } as const;
+}
+
+function Counter({ end, duration = 1200, prefix = '+', suffix = '', className = '' }: { end: number; duration?: number; prefix?: string; suffix?: string; className?: string; }) {
+  const { ref, inView } = useInViewOnce<HTMLSpanElement>();
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    let start: number | null = null;
+    const startVal = 0;
+    const endVal = end;
+
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const step = (ts: number) => {
+      if (start === null) start = ts;
+      const progress = Math.min(1, (ts - start) / duration);
+      const eased = easeOutCubic(progress);
+      const current = Math.round(startVal + (endVal - startVal) * eased);
+      setValue(current);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    const raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, duration, end]);
+
+  return (
+    <span ref={ref} className={className}>
+      {prefix}
+      {value.toLocaleString('pt-BR')}
+      {suffix}
+    </span>
+  );
+}
 
 export default function Home() {
   return (
@@ -50,77 +124,116 @@ export default function Home() {
           </button>
           
           {/* Desktop CTA Button */}
-          <a href="#contato" className="btn-primary hidden lg:inline-flex">
-            Fale Conosco
+          <a href="https://econtador.alterdata.com.br" className="btn-primary hidden lg:inline-flex">
+            Area do cliente
           </a>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="inicio" className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50"></div>
+      {/* Hero Section - com imagem de fundo e overlay escuro */}
+      <section
+        id="inicio"
+        className="relative pt-24 sm:pt-28 pb-20 sm:pb-24 overflow-hidden"
+      >
+        <div
+          className="absolute inset-0 bg-fixed"
+          style={{
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2400&auto=format&fit=crop)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="absolute inset-0 bg-black/55" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="animate-slide-in-left text-center lg:text-left">
-              <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
-                <span className="w-2 h-2 bg-pink-600 rounded-full mr-2"></span>
-                Contabilidade Inteligente + BPO Financeiro
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-white/10 text-white rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6 backdrop-blur">
+              <span className="w-2 h-2 bg-pink-400 rounded-full mr-2"></span>
+              Contabilidade Inteligente + BPO Financeiro
+            </div>
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4 sm:mb-6">
+              Transforme sua
+              <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent"> contabilidade</span>{' '}
+              em vantagem competitiva
+            </h1>
+            <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed max-w-2xl">
+              Da abertura da empresa à gestão financeira completa. A Consultec cuida da sua contabilidade e do seu fluxo de caixa para você focar no crescimento do seu negócio.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-10">
+              <a href="#contato" className="btn-primary text-center text-sm sm:text-base">
+                <FaPhone className="inline mr-2" />
+                Agende uma reunião gratuita
+              </a>
+              <a href="#servicos" className="btn-secondary text-center text-sm sm:text-base border-white text-white hover:text-white" style={{borderColor: 'rgba(255,255,255,0.85)'}}>
+                Conheça nossos serviços
+              </a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/10 rounded-full flex items-center justify-center">
+                  <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                </div>
+                <span className="text-xs sm:text-sm text-white/90">Obrigações fiscais em dia</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
-                Transforme sua
-                <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent"> contabilidade</span>
-                em vantagem competitiva
-              </h1>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                Da abertura da empresa à gestão financeira completa. A Consultec cuida da sua contabilidade e do seu fluxo de caixa para você focar no crescimento do seu negócio.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
-                <a href="#contato" className="btn-primary text-center text-sm sm:text-base">
-                  <FaPhone className="inline mr-2" />
-                  Agende uma reunião gratuita
-                </a>
-                <a href="#servicos" className="btn-secondary text-center text-sm sm:text-base">
-                  Conheça nossos serviços
-                </a>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/10 rounded-full flex items-center justify-center">
+                  <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                </div>
+                <span className="text-xs sm:text-sm text-white/90">Fluxo de caixa otimizado</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-pink-100 rounded-full flex items-center justify-center">
-                    <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-pink-600" />
-                  </div>
-                  <span className="text-xs sm:text-sm text-gray-700">Obrigações fiscais em dia</span>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/10 rounded-full flex items-center justify-center">
+                  <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                    <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600" />
-                  </div>
-                  <span className="text-xs sm:text-sm text-gray-700">Fluxo de caixa otimizado</span>
+                <span className="text-xs sm:text-sm text-white/90">Relatórios gerenciais</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/10 rounded-full flex items-center justify-center">
+                  <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
-                  </div>
-                  <span className="text-xs sm:text-sm text-gray-700">Relatórios gerenciais</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-pink-100 rounded-full flex items-center justify-center">
-                    <FaCheck className="w-3 h-3 sm:w-4 sm:h-4 text-pink-600" />
-                  </div>
-                  <span className="text-xs sm:text-sm text-gray-700">Consultoria estratégica</span>
-                </div>
+                <span className="text-xs sm:text-sm text-white/90">Consultoria estratégica</span>
               </div>
             </div>
-            <div className="animate-slide-in-right">
-              <div className="relative">
-                <div className="relative z-10 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
-                  <img
-                    src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1600&auto=format&fit=crop"
-                    alt="Equipe analisando finanças no escritório"
-                    className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nossos Números */}
+      <section id="numeros" className="section-padding bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+              <span className="w-2 h-2 bg-purple-600 rounded-full mr-2"></span>
+              Nossos Números
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+              Confiança construída com resultados
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {/* Anos de mercado */}
+            <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border text-center hover:shadow-md transition-shadow transition-transform duration-700 will-change-transform hover:-translate-y-0.5" style={{transitionDelay: '0ms'}}>
+              <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                <Counter end={12} prefix="+" className="align-baseline" /> <span className="text-xl sm:text-2xl font-bold align-top">anos</span>
               </div>
+              <p className="mt-2 text-sm sm:text-base text-gray-600">de experiência de mercado</p>
+            </div>
+
+            {/* Empreendedores atendidos */}
+            <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border text-center hover:shadow-md transition-shadow transition-transform duration-700 will-change-transform hover:-translate-y-0.5" style={{transitionDelay: '100ms'}}>
+              <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                <Counter end={25} prefix="+" suffix=" mil" className="align-baseline" />
+              </div>
+              <p className="mt-2 text-sm sm:text-base text-gray-600">empreendedores atendidos</p>
+            </div>
+
+            {/* Empresas clientes / abertas */}
+            <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border text-center hover:shadow-md transition-shadow transition-transform duration-700 will-change-transform hover:-translate-y-0.5" style={{transitionDelay: '200ms'}}>
+              <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                <Counter end={15} prefix="+" suffix=" mil" className="align-baseline" />
+              </div>
+              <p className="mt-2 text-sm sm:text-base text-gray-600">empresas clientes / abertas</p>
             </div>
           </div>
         </div>
@@ -139,18 +252,19 @@ export default function Home() {
                 Expertise técnica + Tecnologia = Resultados
               </h2>
               <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                Somos uma contabilidade moderna que une <span className="font-semibold text-gray-900">expertise técnica</span> e
-                <span className="font-semibold text-gray-900"> tecnologia de ponta</span> para simplificar rotinas fiscais e
-                profissionalizar a gestão financeira por meio do BPO. Transparência, previsibilidade e
-                decisões baseadas em dados para o seu negócio crescer de forma sustentável.
+                Somos especialistas em atender <span className="font-semibold text-gray-900">clínicas médicas</span> e
+                <span className="font-semibold text-gray-900"> profissionais da saúde</span>. Aliamos expertise técnica e
+                tecnologia de ponta para simplificar rotinas fiscais, garantir conformidade e
+                profissionalizar a gestão financeira via BPO. Transparência, previsibilidade e decisões
+                baseadas em dados para sua clínica crescer com segurança.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="card-shadow rounded-xl p-4 sm:p-6 bg-white">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
                     <FaCheck className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">+10 setores atendidos</h4>
-                  <p className="text-xs sm:text-sm text-gray-600">Comércio, serviços, saúde, indústria e muito mais.</p>
+                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Especialistas em Saúde</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">Clínicas médicas, consultórios, odontologia, estética e mais.</p>
                 </div>
                 <div className="card-shadow rounded-xl p-4 sm:p-6 bg-white">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
@@ -172,13 +286,31 @@ export default function Home() {
                 </div>
                 <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-white rounded-lg sm:rounded-xl shadow-xl p-4 sm:p-6">
                   <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-pink-600 mb-1">98%</div>
-                    <div className="text-xs sm:text-sm text-gray-600">Satisfação dos clientes</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-pink-600 mb-1">Reunião gratuita</div>
+                    <div className="text-xs sm:text-sm text-gray-600">Agende sua avaliação</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Notícias */}
+      <section id="noticias" className="section-padding bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+              <span className="w-2 h-2 bg-purple-600 rounded-full mr-2"></span>
+              Últimas notícias
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+              Acompanhe nossas atualizações
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-gray-600">Conteúdos e novidades relevantes para o seu negócio.</p>
+          </div>
+
+          <NewsCarousel/>
         </div>
       </section>
 
@@ -520,8 +652,7 @@ export default function Home() {
         </div>
         <div className="border-t border-gray-800 py-4 sm:py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center text-xs sm:text-sm text-gray-400">
-            © {new Date().getFullYear()} Consultec. Todos os direitos reservados. | 
-            Desenvolvido com ❤️ para o sucesso do seu negócio.
+            © {new Date().getFullYear()} Consultec. Todos os direitos reservados.
           </div>
         </div>
       </footer>
