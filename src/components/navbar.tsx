@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import Link from "next/link";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -46,42 +47,42 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <a
+            <Link
               href="/#inicio"
               className="text-gray-700 hover:text-pink-600 font-medium transition-colors"
             >
               Início
-            </a>
-            <a
+            </Link>
+            <Link
               href="/#sobre"
               className="text-gray-700 hover:text-pink-600 font-medium transition-colors"
             >
               Sobre
-            </a>
-            <a
+            </Link>
+            <Link
               href="/#servicos"
               className="text-gray-700 hover:text-pink-600 font-medium transition-colors"
             >
               Serviços
-            </a>
-            <a
+            </Link>
+            <Link
               href="/#diferenciais"
               className="text-gray-700 hover:text-pink-600 font-medium transition-colors"
             >
               Diferenciais
-            </a>
-            <a
+            </Link>
+            <Link
               href="/#contato"
               className="text-gray-700 hover:text-pink-600 font-medium transition-colors"
             >
               Contato
-            </a>
-            <a
+            </Link>
+            <Link
               href="/agenda-tributaria"
               className="text-gray-700 hover:text-pink-600 font-medium transition-colors"
             >
               Agenda Tributária
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -95,12 +96,12 @@ export default function Navbar() {
           </button>
 
           {/* Desktop CTA Button */}
-          <a
+          <Link
             href="https://econtador.alterdata.com.br"
             className="btn-primary hidden lg:inline-flex"
           >
             Área do cliente
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -126,13 +127,13 @@ export default function Navbar() {
               { href: '/agenda-tributaria', label: 'Agenda Tributária' },
             ].map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className="block px-5 py-4 text-gray-700 font-medium hover:bg-gray-50"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
