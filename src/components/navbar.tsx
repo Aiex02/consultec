@@ -36,7 +36,7 @@ export default function Navbar() {
   }, [lastScrollY]);
   return (
     <>
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${visible ? 'translate-y-0 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm' : '-translate-y-full'}`}>
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${visible ? 'translate-y-0 bg-white backdrop-blur-md border-b border-gray-100 shadow-sm' : '-translate-y-full'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
           <div className="flex items-center space-x-3">
             <Image src="/logo.png" alt="Consultec" width={35} height={35} />
