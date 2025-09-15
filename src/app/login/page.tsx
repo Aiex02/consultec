@@ -1,10 +1,11 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { Suspense, FormEvent, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Image from 'next/image';
 
-export default function LoginPage() {
+function LoginInner() {
   const supabase = createClientComponentClient();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -25,8 +26,7 @@ export default function LoginPage() {
       if (data.session) router.replace(redirectTo);
     };
     checkSession();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [supabase, router, redirectTo]);
 
   const onSubmitPassword = async (e: FormEvent) => {
     e.preventDefault();
@@ -48,14 +48,30 @@ export default function LoginPage() {
 
     if (data.session) {
       router.replace(redirectTo);
+    } else {
+      setMessage('Login realizado, redirecionando...');
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-sm">
-        <img src="/logo.png" alt="Logo" className="mx-auto h-16 w-auto" />
-        <form onSubmit={onSubmitPassword} className="mt-6 space-y-4">
+        <div className="mx-auto mb-4 flex justify-center">
+          <Image src="/logo.png" alt="Logo" width={128} height={64} priority />
+        </div>
+
+        {error && (
+          <p className="mb-3 text-sm text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+        {message && (
+          <p className="mb-3 text-sm text-green-600" role="status">
+            {message}
+          </p>
+        )}
+
+        <form onSubmit={onSubmitPassword} className="mt-2 space-y-4">
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-medium">E-mail</label>
             <input
@@ -85,12 +101,20 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-70"
           >
             {loading ? 'Entrando…' : 'Entrar'}
           </button>
         </form>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginInner />
+    </Suspense>
   );
 }
