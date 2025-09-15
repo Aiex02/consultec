@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
 import { FiExternalLink, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
 
 // Modelo de dados da tabela `news` no Supabase:
@@ -14,7 +13,6 @@ import { FiExternalLink, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
 
 export default function AreaSecretaPage() {
   const supabase = createClientComponentClient();
-  const router = useRouter();
 
   const [news, setNews] = useState<
     Array<{
@@ -38,7 +36,6 @@ export default function AreaSecretaPage() {
     id: string;
     title: string;
   } | null>(null);
-  const [userEmail, setUserEmail] = useState<string>("");
 
   // Form state
   const [title, setTitle] = useState("");
@@ -46,15 +43,7 @@ export default function AreaSecretaPage() {
   const [sourceUrl, setSourceUrl] = useState("");
   const [saving, setSaving] = useState(false);
 
-  const menu = useMemo(() => [{ key: "add", label: "Adicionar notícias" }], []);
-
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUserEmail(data.user?.email ?? "");
-    };
-    fetchUser();
-
     const fetchNews = async () => {
       setLoading(true);
       setError(null);
@@ -73,11 +62,6 @@ export default function AreaSecretaPage() {
 
     fetchNews();
   }, [supabase]);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/login");
-  };
 
   const openModal = () => {
     setTitle("");
@@ -186,114 +170,82 @@ export default function AreaSecretaPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <aside className="w-64 shrink-0 bg-gray-900 text-white flex flex-col">
-        <div className="h-16 flex items-center px-4 border-b border-gray-800">
-          <span className="font-semibold">Área Restrita</span>
-        </div>
-        <nav className="p-3 space-y-1">
-          {menu.map((item) => (
-            <button
-              key={item.key}
-              onClick={openModal}
-              className="w-full text-left rounded-md px-3 py-2 hover:bg-gray-800"
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-        <div className="mt-auto p-3 border-t border-gray-800">
-          <div className="mb-2 px-3 text-xs text-gray-300">
-            {userEmail || "usuário@exemplo.com"}
+    <>
+      <header className="h-16 bg-white border-b flex items-center justify-between px-6">
+        <h1 className="text-lg font-semibold">Notícias</h1>
+        <button
+          onClick={openModal}
+          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        >
+          <FiPlus className="h-4 w-4" /> Nova notícia
+        </button>
+      </header>
+
+      <section className="p-6">
+        {error && (
+          <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            {error}
           </div>
-          <button
-            onClick={handleLogout}
-            className="w-full rounded-md bg-red-600 px-3 py-2 text-sm font-medium hover:bg-red-700"
-          >
-            Logout
-          </button>
-        </div>
-      </aside>
+        )}
 
-      {/* Main */}
-      <main className="flex-1 bg-gray-50">
-        <header className="h-16 bg-white border-b flex items-center justify-between px-6">
-          <h1 className="text-lg font-semibold">Notícias</h1>
-          <button
-            onClick={openModal}
-            className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-          >
-            <FiPlus className="h-4 w-4" /> Nova notícia
-          </button>
-        </header>
-
-        <section className="p-6">
-          {error && (
-            <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-              {error}
-            </div>
-          )}
-
-          {loading ? (
-            <div className="text-sm text-gray-500">Carregando…</div>
-          ) : news.length === 0 ? (
-            <div className="text-sm text-gray-500">
-              Nenhuma notícia cadastrada ainda.
-            </div>
-          ) : (
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {news.map((n) => (
-                <li
-                  key={n.id}
-                  className="group rounded-xl border bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <h2 className="truncate text-base font-semibold leading-tight">
-                        {n.title}
-                      </h2>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <a
-                        href={n.source_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs text-blue-600 hover:bg-blue-50"
-                        title="Abrir fonte"
-                      >
-                        <FiExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                      <button
-                        onClick={() => openEdit(n)}
-                        className="inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs hover:bg-gray-50"
-                        title="Editar"
-                      >
-                        <FiEdit2 className="h-3.5 w-3.5" />
-                      </button>
-                      <button
-                        onClick={() => openDelete(n)}
-                        className="inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs text-red-600 hover:bg-red-50"
-                        title="Remover"
-                      >
-                        <FiTrash2 className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
+        {loading ? (
+          <div className="text-sm text-gray-500">Carregando…</div>
+        ) : news.length === 0 ? (
+          <div className="text-sm text-gray-500">
+            Nenhuma notícia cadastrada ainda.
+          </div>
+        ) : (
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {news.map((n) => (
+              <li
+                key={n.id}
+                className="group rounded-xl border bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h2 className="truncate text-base font-semibold leading-tight">
+                      {n.title}
+                    </h2>
                   </div>
-                  <p className="mt-3 text-sm text-gray-600 line-clamp-4">
-                    {n.description}
-                  </p>
-                  <div className="mt-1 inline-flex items-center gap-2 text-[11px] text-gray-400">
-                    <span className="rounded-full bg-gray-100 px-2 py-0.5">
-                      {new Date(n.created_at).toLocaleString()}
-                    </span>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={n.source_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs text-blue-600 hover:bg-blue-50"
+                      title="Abrir fonte"
+                    >
+                      <FiExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                    <button
+                      onClick={() => openEdit(n)}
+                      className="inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs hover:bg-gray-50"
+                      title="Editar"
+                    >
+                      <FiEdit2 className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={() => openDelete(n)}
+                      className="inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs text-red-600 hover:bg-red-50"
+                      title="Remover"
+                    >
+                      <FiTrash2 className="h-3.5 w-3.5" />
+                    </button>
                   </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      </main>
+                </div>
+                <p className="mt-3 text-sm text-gray-600 line-clamp-4">
+                  {n.description}
+                </p>
+                <div className="mt-1 inline-flex items-center gap-2 text-[11px] text-gray-400">
+                  <span className="rounded-full bg-gray-100 px-2 py-0.5">
+                    {new Date(n.created_at).toLocaleString()}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       {/* Modal para nova notícia */}
       {isModalOpen && (
@@ -410,6 +362,6 @@ export default function AreaSecretaPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
