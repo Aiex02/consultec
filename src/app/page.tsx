@@ -28,6 +28,10 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaExternalLinkAlt,
+  FaFacebook,
+  FaFileAlt,
+  FaKey,
+  FaStethoscope,
 } from "react-icons/fa";
 import NewsCarousel from "@/components/news";
 import Navbar from "@/components/navbar";
@@ -224,7 +228,7 @@ export default function Home() {
               style={{ transitionDelay: "0ms" }}
             >
               <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                <Counter end={12} prefix="+" className="align-baseline" />{" "}
+                <Counter end={40} prefix="+" className="align-baseline" />{" "}
                 <span className="text-xl sm:text-2xl font-bold align-top">
                   anos
                 </span>
@@ -241,7 +245,7 @@ export default function Home() {
             >
               <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 <Counter
-                  end={25}
+                  end={75}
                   prefix="+"
                   suffix=" mil"
                   className="align-baseline"
@@ -259,7 +263,7 @@ export default function Home() {
             >
               <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 <Counter
-                  end={15}
+                  end={20}
                   prefix="+"
                   suffix=" mil"
                   className="align-baseline"
@@ -283,7 +287,8 @@ export default function Home() {
                 Sobre a Consultec
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
-                Especialistas em Médicos + Gestão Financeira
+                Especialistas em gestão da saúde / clinicas medicas + Gestão
+                financeira
               </h2>
               <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                 Somos especialistas em atender{" "}
@@ -295,7 +300,11 @@ export default function Home() {
                   {" "}
                   profissionais da saúde
                 </span>
-                . Simplificamos rotinas fiscais, garantimos conformidade e fortalecemos a gestão financeira por meio do BPO. Atuamos com transparência, previsibilidade e informações claras, oferecendo segurança e eficiência para o crescimento de sua clínica ou empresa.
+                . Simplificamos rotinas fiscais, garantimos conformidade e
+                fortalecemos a gestão financeira por meio do BPO. Atuamos com
+                transparência, previsibilidade e informações claras, oferecendo
+                segurança e eficiência para o crescimento de sua clínica ou
+                empresa.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="card-shadow rounded-xl p-4 sm:p-6 bg-white">
@@ -389,12 +398,12 @@ export default function Home() {
             {[
               {
                 title: "Contabilidade Completa",
-                desc: "Escrituração, apurações e demonstrações contábeis com tecnologia de ponta.",
+                desc: "Escrituração, apurações e demonstrações contábeis.",
                 icon: FaChartLine,
               },
               {
                 title: "Folha de Pagamento",
-                desc: "RH, pró‑labore, eSocial e obrigações trabalhistas em conformidade.",
+                desc: "RH, pró-labore, eSocial e obrigações trabalhistas em conformidade.",
                 icon: FaUsers,
               },
               {
@@ -416,6 +425,21 @@ export default function Home() {
                 title: "Consultoria Estratégica",
                 desc: "Indicadores, metas e apoio à tomada de decisão baseada em dados.",
                 icon: FaBullseye,
+              },
+              {
+                title: "Imposto de Renda PF",
+                desc: "Declarações completas, revisão de pendências e otimização tributária.",
+                icon: FaFileAlt, // ícone de documento
+              },
+              {
+                title: "Gestão Receita Saúde",
+                desc: "Emissão, conciliação e regularização de receitas médicas junto ao SNGPC.",
+                icon: FaStethoscope, // ícone ligado à saúde
+              },
+              {
+                title: "Certificados Digitais",
+                desc: "Emissão e renovação de e-CPF e e-CNPJ com segurança e praticidade.",
+                icon: FaKey, // ícone de chave
               },
             ].map((service, index) => (
               <div
@@ -476,9 +500,9 @@ export default function Home() {
                 Missão
               </h3>
               <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                Empoderar empreendedores com contabilidade inteligente e BPO
-                financeiro, traduzindo números em decisões que aceleram
-                crescimento com conformidade e simplicidade.
+                Ajudar profissionais de saúde e empreendedores a crescer com
+                segurança, oferecendo contabilidade estratégica e BPO financeiro
+                que transformam números em decisões inteligentes.
               </p>
             </div>
 
@@ -492,9 +516,9 @@ export default function Home() {
                 Visão
               </h3>
               <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                Ser a parceira preferida das clínicas e profissionais de saúde
-                no Brasil, reconhecida por unir excelência técnica, tecnologia e
-                atendimento consultivo.
+                Fornecer informações financeiras e patrimoniais precisas e
+                completas para auxiliar na tomada de decisões, tanto internas
+                quanto externas com intuito de maximizar o resultado da empresa.
               </p>
             </div>
 
@@ -504,29 +528,25 @@ export default function Home() {
               <div className="mx-auto mb-5 sm:mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500 text-white shadow-md ring-4 ring-white">
                 <FaHandshake className="h-8 w-8" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 text-center">
-                Valores
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 flex items-center justify-center after:ml-3 after:h-px after:flex-1 after:bg-gray-200 before:mr-3 before:h-px before:flex-1 before:bg-gray-200">
+                Visão
               </h3>
-              <ul className="text-gray-600 leading-relaxed text-sm sm:text-base space-y-2">
-                <li>
-                  <span className="font-medium text-gray-900">
-                    Transparência:
-                  </span>{" "}
-                  relações claras e dados acessíveis.
-                </li>
-                <li>
-                  <span className="font-medium text-gray-900">Excelência:</span>{" "}
-                  rigor técnico e melhoria contínua.
-                </li>
-                <li>
-                  <span className="font-medium text-gray-900">Parceria:</span>{" "}
-                  proximidade e compromisso com resultados.
-                </li>
-                <li>
-                  <span className="font-medium text-gray-900">Segurança:</span>{" "}
-                  cuidado com informações e conformidade.
-                </li>
-              </ul>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                <span className="font-bold">Transparencia: </span>relações
+                claras e dados acessíveis.
+              </p>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                <span className="font-bold">Excelência: </span>rigor técnico e
+                melhoria contínua.
+              </p>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                <span className="font-bold">Parceria: </span>proximidade e
+                compromisso com resultados.
+              </p>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                <span className="font-bold">Segurança: </span>cuidado com
+                informações e conformidade.
+              </p>
             </div>
           </div>
         </div>
@@ -605,7 +625,7 @@ export default function Home() {
               <div className="space-y-5 sm:space-y-6">
                 {/* Telefone */}
                 <a
-                  href="tel:+5521999999999"
+                  href="tel:+5524993263370"
                   className="group flex items-center justify-between rounded-xl border border-gray-100 p-4 sm:p-5 hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center gap-3 sm:gap-4">
@@ -617,7 +637,7 @@ export default function Home() {
                         Telefone
                       </p>
                       <p className="text-gray-600 text-sm sm:text-base">
-                        (21) 99999‑9999
+                        +55 24 99326-3370
                       </p>
                     </div>
                   </div>
@@ -628,7 +648,7 @@ export default function Home() {
 
                 {/* E-mail */}
                 <a
-                  href="mailto:contato@consultec.com.br"
+                  href="mailto:faleconosco@consulteconline.com.br"
                   className="group flex items-center justify-between rounded-xl border border-gray-100 p-4 sm:p-5 hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center gap-3 sm:gap-4">
@@ -640,7 +660,7 @@ export default function Home() {
                         E-mail
                       </p>
                       <p className="text-gray-600 text-sm sm:text-base">
-                        contato@consultec.com.br
+                        faleconosco@consulteconline.com.br
                       </p>
                     </div>
                   </div>
@@ -651,7 +671,7 @@ export default function Home() {
 
                 {/* WhatsApp */}
                 <a
-                  href="https://wa.me/"
+                  href="https://wa.me/5524993263370"
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between rounded-xl border border-gray-100 p-4 sm:p-5 hover:bg-gray-50 transition-colors"
@@ -664,8 +684,8 @@ export default function Home() {
                       <p className="font-semibold text-gray-900 text-sm sm:text-base">
                         WhatsApp
                       </p>
-                      <p className="text-pink-600 hover:text-pink-700 underline text-sm sm:text-base">
-                        Clique para conversar
+                      <p className="text-gray-600 text-sm sm:text-base">
+                        +55 24 99326-3370
                       </p>
                     </div>
                   </div>
@@ -688,21 +708,15 @@ export default function Home() {
               {/* Quick actions */}
               <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a
-                  href="tel:+5521999999999"
-                  className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 px-5 py-3 text-white text-sm sm:text-base font-semibold shadow hover:opacity-95"
-                >
-                  <FaPhone className="mr-2" /> Ligar agora
-                </a>
-                <a
-                  href="https://wa.me/"
+                  href="https://wa.me/5524993263370"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-lg border border-pink-200 text-pink-700 px-5 py-3 text-sm sm:text-base font-semibold hover:bg-pink-50"
+                  className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 px-5 py-3 text-white text-sm sm:text-base font-semibold shadow hover:opacity-95"
                 >
                   <FaWhatsapp className="mr-2" /> WhatsApp
                 </a>
                 <a
-                  href="mailto:contato@consultec.com.br"
+                  href="mailto:faleconosco@consulteconline.com.br"
                   className="inline-flex items-center justify-center rounded-lg border border-gray-200 text-gray-700 px-5 py-3 text-sm sm:text-base font-semibold hover:bg-gray-50"
                 >
                   <FaEnvelope className="mr-2" /> Enviar e-mail
@@ -712,112 +726,135 @@ export default function Home() {
 
             {/* Redes Sociais */}
             <div className="relative overflow-hidden rounded-2xl bg-white p-6 sm:p-8 shadow-sm ring-1 ring-gray-100 transition-all hover:shadow-lg">
+              {/* gradient top bar */}
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500" />
+
               <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 sm:mb-8">
                 Redes Sociais
               </h3>
+
               <div className="space-y-5 sm:space-y-6">
-                {/* Twitter */}
-                <a
-                  href="https://twitter.com/consultec"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-gray-100 p-4 sm:p-5 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#1DA1F2]/10 flex items-center justify-center ring-4 ring-white shadow">
-                      <FaTwitter className="w-5 h-5 sm:w-6 sm:h-6 text-[#1DA1F2]" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm sm:text-base">
-                        Twitter
-                      </p>
-                      <p className="text-gray-600 text-xs sm:text-sm truncate">
-                        @consultec
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-xs sm:text-sm font-medium text-pink-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Abrir
-                  </span>
-                </a>
-
-                {/* LinkedIn */}
-                <a
-                  href="https://www.linkedin.com/company/consultec"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-gray-100 p-4 sm:p-5 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#0A66C2]/10 flex items-center justify-center ring-4 ring-white shadow">
-                      <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6 text-[#0A66C2]" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm sm:text-base">
-                        LinkedIn
-                      </p>
-                      <p className="text-gray-600 text-xs sm:text-sm truncate">
-                        /company/consultec
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-xs sm:text-sm font-medium text-pink-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Abrir
-                  </span>
-                </a>
-
                 {/* Instagram */}
                 <a
-                  href="https://www.instagram.com/consultec"
+                  href="https://www.instagram.com/consultecconsultoria?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between rounded-xl border border-gray-100 p-4 sm:p-5 hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#E1306C]/10 flex items-center justify-center ring-4 ring-white shadow">
-                      <FaInstagram className="w-5 h-5 sm:w-6 sm:h-6 text-[#E1306C]" />
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center ring-4 ring-white shadow">
+                      <FaInstagram className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <div className="min-w-0">
+                    <div>
                       <p className="font-semibold text-gray-900 text-sm sm:text-base">
                         Instagram
                       </p>
-                      <p className="text-gray-600 text-xs sm:text-sm truncate">
-                        @consultec
+                      <p className="text-gray-600 text-sm sm:text-base">
+                        @consultecconsultoria
                       </p>
                     </div>
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-pink-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Abrir
+                    Ver perfil
+                  </span>
+                </a>
+
+                {/* Facebook */}
+                <a
+                  href="https://www.facebook.com/consultecvr/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-center justify-between rounded-xl border border-gray-100 p-4 sm:p-5 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center ring-4 ring-white shadow">
+                      <FaFacebook className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                        Facebook
+                      </p>
+                      <p className="text-gray-600 text-sm sm:text-base">
+                        @consultecvr
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs sm:text-sm font-medium text-pink-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Acessar página
                   </span>
                 </a>
               </div>
-              <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gray-100">
+
+              <div className="mt-8 sm:mt-38 pt-6 sm:pt-8 border-t border-gray-100">
                 <h4 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                  Redes sempre atualizadas
+                  Conecte-se conosco
                 </h4>
                 <p className="text-gray-600 text-xs sm:text-sm">
-                  Acompanhe nossas novidades e conteúdos nas redes sociais.
+                  Acompanhe novidades, conteúdos e dicas nas nossas redes
+                  sociais.
                 </p>
               </div>
 
-              {/* CTA */}
-              <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
+              {/* Quick actions */}
+              <div className="mt-6 sm:mt-13 flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a
-                  href="https://www.instagram.com/consultec"
+                  href="https://www.instagram.com/consultecconsultoria?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 px-5 py-3 text-white text-sm sm:text-base font-semibold shadow hover:opacity-95"
                 >
-                  Seguir perfis
+                  <FaInstagram className="mr-2" /> Instagram
                 </a>
                 <a
-                  href="#contato"
+                  href="https://www.facebook.com/consultecvr/"
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex items-center justify-center rounded-lg border border-gray-200 text-gray-700 px-5 py-3 text-sm sm:text-base font-semibold hover:bg-gray-50"
                 >
-                  Falar com a equipe
+                  <FaFacebook className="mr-2" /> Facebook
                 </a>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+     <section className="section-padding bg-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+              <span className="w-2 h-2 bg-pink-600 rounded-full mr-2 "></span>
+              Nossa Localização
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-white sm:mb-6">
+              Venha nos visitar
+            </h2>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-3xl mx-auto">
+              Estamos prontos para receber você em nosso escritório. Confira
+              abaixo nossa localização no mapa e a fachada do espaço.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Google Maps */}
+            <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3685.952453973999!2d-44.094101800000004!3d-22.505967000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9ea2a999aeb95f%3A0x607f2b93014a4efc!2sAv.%20Lucas%20Evangelista%20de%20Oliveira%20Franco%2C%20610%20-%20Aterrado%2C%20Volta%20Redonda%20-%20RJ%2C%2027215-630!5e0!3m2!1spt-BR!2sbr!4v1758046823913!5m2!1spt-BR!2sbr"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+
+            {/* Foto da fachada */}
+            <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
+              <img
+                src="https://images.pexels.com/photos/443383/pexels-photo-443383.jpeg"
+                alt="Fachada do escritório Consultec"
+                className="w-full h-[450px] object-cover"
+              />
             </div>
           </div>
         </div>

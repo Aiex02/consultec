@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaTwitter, FaLinkedin, FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { FaTwitter, FaLinkedin, FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -19,12 +19,12 @@ export default function Footer() {
               </p>
               <div className="flex space-x-3 sm:space-x-4">
                 <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors">
-                  <FaTwitter className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <FaWhatsapp className="w-4 h-4 sm:w-5 sm:h-5" />
                 </a>
-                <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors">
-                  <FaLinkedin className="w-4 h-4 sm:w-5 sm:h-5" />
+                <a href="https://www.facebook.com/consultecvr/" className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors">
+                  <FaFacebook className="w-4 h-4 sm:w-5 sm:h-5" />
                 </a>
-                <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors">
+                <a href="https://www.instagram.com/consultecconsultoria?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors">
                   <FaInstagram className="w-4 h-4 sm:w-5 sm:h-5" />
                 </a>
               </div>
@@ -44,15 +44,15 @@ export default function Footer() {
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li className="flex items-center space-x-2">
                   <FaPhone className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-                  <span>(21) 99999‑9999</span>
+                  <span>(24) 99326‑3370</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <FaEnvelope className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-                  <span>contato@consultec.com.br</span>
+                  <span>faleconosco@consulteconline.com.br</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <FaMapMarkerAlt className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-                  <span>Rio de Janeiro, RJ</span>
+                  <span>Volta Redonda, RJ</span>
                 </li>
               </ul>
             </div>
