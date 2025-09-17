@@ -36,6 +36,7 @@ import {
 import NewsCarousel from "@/components/news";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import SobreCarousel from "@/components/sobreCarousel";
 
 type NewsItem = {
   id: string;
@@ -278,84 +279,7 @@ export default function Home() {
       </section>
 
       {/* Sobre Nós */}
-      <section id="sobre" className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div className="animate-fade-in-up order-2 lg:order-1">
-              <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
-                <span className="w-2 h-2 bg-pink-600 rounded-full mr-2"></span>
-                Sobre a Consultec
-              </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
-                Especialistas em gestão da saúde / clinicas medicas + Gestão
-                financeira
-              </h2>
-              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                Somos especialistas em atender{" "}
-                <span className="font-semibold text-gray-900">
-                  clínicas médicas
-                </span>{" "}
-                e
-                <span className="font-semibold text-gray-900">
-                  {" "}
-                  profissionais da saúde
-                </span>
-                . Simplificamos rotinas fiscais, garantimos conformidade e
-                fortalecemos a gestão financeira por meio do BPO. Atuamos com
-                transparência, previsibilidade e informações claras, oferecendo
-                segurança e eficiência para o crescimento de sua clínica ou
-                empresa.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="card-shadow rounded-xl p-4 sm:p-6 bg-white">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <FaCheck className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                    Especialistas em Saúde
-                  </h4>
-                  <p className="text-xs sm:text-sm text-gray-600">
-                    Clínicas médicas, consultórios, odontologia, estética e
-                    mais.
-                  </p>
-                </div>
-                <div className="card-shadow rounded-xl p-4 sm:p-6 bg-white">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <FaUsers className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                    Atendimento consultivo
-                  </h4>
-                  <p className="text-xs sm:text-sm text-gray-600">
-                    Reuniões periódicas e relatórios gerenciais personalizados.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="animate-fade-in-up order-1 lg:order-2">
-              <div className="relative">
-                <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
-                  <img
-                    src="https://images.unsplash.com/photo-1554774853-b415df9eeb92?q=80&w=1600&auto=format&fit=crop"
-                    alt="Profissional de contabilidade revisando documentos"
-                    className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-white rounded-lg sm:rounded-xl shadow-xl p-4 sm:p-6">
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-pink-600 mb-1">
-                      Avaliação gratuita
-                    </div>
-                    <div className="text-xs sm:text-sm text-gray-600">
-                      Descubra como otimizar sua contabilidade e finanças
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <SobreCarousel />
 
       {/* Notícias */}
       <section id="noticias" className="section-padding bg-gray-50">
