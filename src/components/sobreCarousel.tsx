@@ -89,7 +89,7 @@ const segmentos = [
     descricao:
       "Apoiamos ONGs, associações e fundações a manterem transparência contábil e relatórios de fácil compreensão.",
     imagem:
-      "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584592487914-a29c64f25887?q=80&w=1600&auto=format&fit=crop",
     cards: [
       {
         icon: FaHandsHelping,
