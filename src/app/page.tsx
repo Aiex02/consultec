@@ -127,10 +127,10 @@ export default function Home() {
         className="relative pt-24 sm:pt-28 pb-20 sm:pb-24 overflow-hidden"
       >
         <div
-          className="absolute inset-0 bg-fixed"
+          className="absolute inset-0"
           style={{
             backgroundImage:
-              "url(https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2400&auto=format&fit=crop)",
+              "url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2400&auto=format&fit=crop)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -742,7 +742,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-     <section className="section-padding bg-gray-900 text-white">
+      <section className="section-padding bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">

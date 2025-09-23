@@ -1,5 +1,4 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -138,13 +137,13 @@ const segmentos = [
 ];
 
 export default function SobreCarousel() {
+
   return (
     <section id="sobre" className="w-full bg-white flex items-center">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={16}
         pagination={{ clickable: true }}
-        navigation={typeof window !== 'undefined' && window.innerWidth >= 640}
         autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
         className="w-full"
       >
