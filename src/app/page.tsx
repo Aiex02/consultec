@@ -453,7 +453,7 @@ export default function Home() {
                 <FaHandshake className="h-8 w-8" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 flex items-center justify-center after:ml-3 after:h-px after:flex-1 after:bg-gray-200 before:mr-3 before:h-px before:flex-1 before:bg-gray-200">
-                Visão
+                Valores
               </h3>
               <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                 <span className="font-bold">Transparencia: </span>relações
