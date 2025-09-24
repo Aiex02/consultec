@@ -17,6 +17,7 @@ export default function Footer() {
                 Contabilidade inteligente e BPO Financeiro para empresas de todos os portes. 
                 Transformamos dados em insights para o crescimento do seu negócio.
               </p>
+              
               <div className="flex space-x-3 sm:space-x-4">
                 <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors">
                   <FaWhatsapp className="w-4 h-4 sm:w-5 sm:h-5" />
