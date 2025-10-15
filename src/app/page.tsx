@@ -806,7 +806,7 @@ export default function Home() {
                 ))}
               </div>
               <div className="hidden sm:grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
-                {Array.from({ length: 14 }).map((_, index) => (
+                {Array.from({ length: 15 }).map((_, index) => (
                   <div key={index} className="relative aspect-square rounded-lg overflow-hidden shadow hover:shadow-lg transition">
                     <Image
                       src={`/time/foto-${index + 1}.jpg`}
