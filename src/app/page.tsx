@@ -126,21 +126,21 @@ export default function Home() {
         id="inicio"
         className="relative pt-24 sm:pt-28 pb-20 sm:pb-24 overflow-hidden"
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2400&auto=format&fit=crop)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        <div className="absolute inset-0">
+          <Image
+            src="/hero1.jpg"
+            alt="Hero background"
+            fill
+            priority
+            className="object-cover object-top sm:object-center"
+          />
+        </div>
         <div className="absolute inset-0 bg-black/55" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl">
             <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-white/10 text-white rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6 backdrop-blur">
               <span className="w-2 h-2 bg-pink-400 rounded-full mr-2"></span>
-              Contabilidade Inteligente + BPO Financeiro
+              Contabilidade + BPO Financeiro
             </div>
             <h1 className="text-4xl sm:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4 sm:mb-6">
               Transforme sua
@@ -758,7 +758,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div className="items-center">
             {/* Google Maps */}
             <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
               <iframe
@@ -771,16 +771,54 @@ export default function Home() {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
-
-            {/* Foto da fachada */}
-            <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
-              <img
-                src="https://images.pexels.com/photos/443383/pexels-photo-443383.jpeg"
-                alt="Fachada do escritório Consultec"
-                className="w-full h-[450px] object-cover"
-              />
-            </div>
           </div>
+
+          {/* Time da empresa */}
+          <section id="time" className="section-padding bg-gray-900">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+              <div className="text-center mb-12 sm:mb-16">
+                <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                  <span className="w-2 h-2 bg-pink-600 rounded-full mr-2"></span>
+                  Nosso Time
+                </div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">
+                  Conheça quem faz tudo acontecer
+                </h2>
+                <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-3xl mx-auto">
+                  Uma equipe dedicada ao crescimento dos nossos clientes.
+                </p>
+              </div>
+
+              {/* Carrossel mobile, grid para sm+ */}
+              <div className="block sm:hidden overflow-x-auto flex space-x-4 snap-x snap-mandatory pb-4 -mx-4 px-4">
+                {Array.from({ length: 14 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="min-w-[80%] snap-center relative aspect-square rounded-lg overflow-hidden shadow"
+                  >
+                    <Image
+                      src={`/time/foto-${index + 1}.jpg`}
+                      alt={`Membro ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="hidden sm:grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                {Array.from({ length: 14 }).map((_, index) => (
+                  <div key={index} className="relative aspect-square rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                    <Image
+                      src={`/time/foto-${index + 1}.jpg`}
+                      alt={`Membro ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </section>
       <Footer />
