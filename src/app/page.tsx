@@ -14,20 +14,10 @@ import {
   FaBuilding,
   FaMoneyBillWave,
   FaBullseye,
-  FaSearch,
-  FaShieldAlt,
-  FaUserTie,
   FaEye,
   FaHandshake,
   FaArrowRight,
-  FaTwitter,
-  FaLinkedin,
   FaInstagram,
-  FaBars,
-  FaTimes,
-  FaChevronLeft,
-  FaChevronRight,
-  FaExternalLinkAlt,
   FaFacebook,
   FaFileAlt,
   FaKey,
@@ -38,13 +28,6 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import SobreCarousel from "@/components/sobreCarousel";
 
-type NewsItem = {
-  id: string;
-  title: string;
-  description: string;
-  source_url: string;
-  created_at: string;
-};
 
 function useInViewOnce<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
@@ -799,6 +782,7 @@ export default function Home() {
                     <Image
                       src={`/time/foto-${index + 1}.jpg`}
                       alt={`Membro ${index + 1}`}
+                      quality={10}
                       fill
                       className="object-cover"
                     />
