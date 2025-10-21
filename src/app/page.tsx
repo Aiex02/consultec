@@ -780,7 +780,7 @@ export default function Home() {
                     className="min-w-[80%] snap-center relative aspect-square rounded-lg overflow-hidden shadow"
                   >
                     <Image
-                      src={`/time/foto-${index + 1}.jpg`}
+                      src={`/time/foto-${index + 1}.webp`}
                       alt={`Membro ${index + 1}`}
                       quality={50}
                       fill
@@ -793,7 +793,7 @@ export default function Home() {
                 {Array.from({ length: 15 }).map((_, index) => (
                   <div key={index} className="relative aspect-square rounded-lg overflow-hidden shadow hover:shadow-lg transition">
                     <Image
-                      src={`/time/foto-${index + 1}.jpg`}
+                      src={`/time/foto-${index + 1}.webp`}
                       alt={`Membro ${index + 1}`}
                       quality={30}
                       fill
