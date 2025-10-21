@@ -782,7 +782,7 @@ export default function Home() {
                     <Image
                       src={`/time/foto-${index + 1}.jpg`}
                       alt={`Membro ${index + 1}`}
-                      quality={10}
+                      quality={50}
                       fill
                       className="object-cover"
                     />
@@ -795,6 +795,7 @@ export default function Home() {
                     <Image
                       src={`/time/foto-${index + 1}.jpg`}
                       alt={`Membro ${index + 1}`}
+                      quality={50}
                       fill
                       className="object-cover"
                     />
