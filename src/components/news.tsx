@@ -1,128 +1,179 @@
-'use client';
-import { useEffect, useRef, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { FaExternalLinkAlt } from "react-icons/fa";
+"use client";
 
-type NewsItem = {
-  id: string;
-  title: string;
-  description: string;
-  source_url: string;
-  created_at: string;
-};
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { FaNewspaper, FaCalendarAlt, FaExternalLinkAlt, FaArrowRight } from "react-icons/fa";
+import type { AgendaItem } from "@/app/api/agenda/route";
 
-function NewsCarousel() {
-  const supabase = createClientComponentClient();
-  const [items, setItems] = useState<NewsItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const isDownRef = useRef(false);
-  const startXRef = useRef(0);
-  const scrollLeftRef = useRef(0);
-  const [dragging, setDragging] = useState(false);
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    isDownRef.current = true;
-    setDragging(true);
-    startXRef.current = e.pageX - el.offsetLeft;
-    scrollLeftRef.current = el.scrollLeft;
-  };
-
-  const onMouseLeave = () => {
-    isDownRef.current = false;
-    setDragging(false);
-  };
-
-  const onMouseUp = () => {
-    isDownRef.current = false;
-    setDragging(false);
-  };
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    const el = scrollerRef.current;
-    if (!el || !isDownRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - el.offsetLeft;
-    const walk = (x - startXRef.current) * 1;
-    el.scrollLeft = scrollLeftRef.current - walk;
-  };
-
-  useEffect(() => {
-    const fetchNews = async () => {
-      setLoading(true);
-      setError(null);
-      const { data, error } = await supabase
-        .from('news')
-        .select('id, title, description, source_url, created_at')
-        .order('created_at', { ascending: false })
-        .limit(9);
-      if (error) setError(error.message);
-      setItems(data || []);
-      setLoading(false);
-    };
-    fetchNews();
-  }, [supabase]);
-
-  if (loading) {
-    return <div className="text-sm text-gray-500">Carregando notícias…</div>;
+/* ── Tempo relativo ── */
+function tempoRelativo(iso: string): string {
+  try {
+    const diff = Date.now() - new Date(iso).getTime();
+    const dias = Math.floor(diff / 86400000);
+    if (dias === 0) return "Hoje";
+    if (dias === 1) return "Ontem";
+    if (dias < 7) return `${dias}d atrás`;
+    return new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
+  } catch {
+    return "";
   }
+}
 
-  if (error) {
-    return <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>;
-  }
-
-  if (items.length === 0) {
-    return <div className="text-sm text-gray-500">Nenhuma notícia cadastrada ainda.</div>;
-  }
-
+/* ── Skeleton ── */
+function SkeletonCard() {
   return (
-    <div
-      ref={scrollerRef}
-      onMouseDown={onMouseDown}
-      onMouseLeave={onMouseLeave}
-      onMouseUp={onMouseUp}
-      onMouseMove={onMouseMove}
-      className={`flex gap-6 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 px-1 max-w-7xl mx-auto ${
-        dragging ? "cursor-grabbing select-none" : "cursor-grab"
-      }`}
-    >
-      {items.map((n) => (
-        <article
-          key={n.id}
-          className="snap-start shrink-0 w-80 sm:w-[28rem] relative flex flex-col justify-between rounded-none border border-gray-300 bg-white p-6 sm:p-8 shadow-sm transition-shadow hover:shadow-md hover:-translate-y-0.5 font-serif h-[420px]"
-        >
-          <div className="mb-4 border-b border-gray-300 pb-2 text-xs uppercase tracking-wider text-gray-500">
-            Manchete
-          </div>
-
-          <h3 className="text-xl sm:text-2xl font-bold leading-snug text-gray-900 mb-3 group-hover:text-gray-700 line-clamp-2">
-            {n.title}
-          </h3>
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4 line-clamp-4">
-            {n.description}
-          </p>
-
-          <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 text-xs text-gray-600">
-            <span>
-              {new Date(n.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric' })}
-            </span>
-            <a
-              href={n.source_url}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-pink-700 hover:underline"
-            >
-              Saiba mais <FaExternalLinkAlt className="h-4 w-4" />
-            </a>
-          </div>
-        </article>
-      ))}
+    <div className="rounded-2xl bg-white border border-gray-100 overflow-hidden shadow-sm animate-pulse">
+      <div className="h-1 w-full bg-gray-200" />
+      <div className="p-5 space-y-3">
+        <div className="flex gap-2">
+          <div className="h-3 w-20 bg-gray-200 rounded-full" />
+          <div className="h-3 w-14 bg-gray-100 rounded-full" />
+        </div>
+        <div className="h-4 bg-gray-200 rounded w-full" />
+        <div className="h-4 bg-gray-200 rounded w-4/5" />
+        <div className="h-3 bg-gray-100 rounded w-full" />
+        <div className="h-3 bg-gray-100 rounded w-3/4" />
+        <div className="flex justify-between items-center pt-2">
+          <div className="h-3 w-24 bg-gray-200 rounded" />
+          <div className="h-3 w-16 bg-gray-200 rounded" />
+        </div>
+      </div>
     </div>
   );
 }
 
-export default NewsCarousel;
+/* ── Card de notícia ── */
+function NoticiaCard({ item, index }: { item: AgendaItem; index: number }) {
+  const colors = [
+    { from: "#ec4899", to: "#8b5cf6" },
+    { from: "#8b5cf6", to: "#3b82f6" },
+    { from: "#f97316", to: "#ec4899" },
+    { from: "#06b6d4", to: "#8b5cf6" },
+    { from: "#10b981", to: "#3b82f6" },
+    { from: "#ec4899", to: "#ef4444" },
+  ];
+  const c = colors[index % colors.length];
+
+  return (
+    <a
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col rounded-2xl bg-white border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+    >
+      {/* Barra gradiente topo */}
+      <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${c.from}, ${c.to})` }} />
+
+      <div className="flex flex-col flex-1 p-5">
+        {/* Meta */}
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
+          <div className="flex items-center gap-1 text-xs text-gray-400">
+            <FaCalendarAlt className="w-2.5 h-2.5" />
+            <span>{tempoRelativo(item.data)}</span>
+          </div>
+          {item.assunto && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: `${c.from}18`, color: c.from }}>
+              {item.assunto}
+            </span>
+          )}
+        </div>
+
+        {/* Título */}
+        <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-2 leading-snug group-hover:text-pink-600 transition-colors flex-1 line-clamp-3">
+          {item.titulo}
+        </h3>
+
+        {/* Descrição */}
+        {item.descricao && item.descricao !== item.titulo && (
+          <p className="text-xs text-gray-500 leading-relaxed mb-4 line-clamp-2">
+            {item.descricao}
+          </p>
+        )}
+
+        {/* Rodapé */}
+        <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
+          <span className="flex items-center gap-1.5 text-xs text-gray-400">
+            <FaNewspaper className="w-2.5 h-2.5" />
+            Receita Federal
+          </span>
+          <span className="flex items-center gap-1.5 text-xs font-semibold group-hover:gap-2.5 transition-all" style={{ color: c.from }}>
+            Ler mais <FaExternalLinkAlt className="w-2.5 h-2.5" />
+          </span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+/* ═══════════════════════════════════════════ */
+export default function NewsCarousel() {
+  const [items, setItems] = useState<AgendaItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const res = await fetch("/api/agenda");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        // Mostra apenas as 6 mais recentes
+        setItems((data.items ?? []).slice(0, 6));
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchNews();
+  }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+        </div>
+      </div>
+    );
+  }
+
+  if (error || items.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <FaNewspaper className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+        <p className="text-gray-500 font-medium">Notícias indisponíveis no momento.</p>
+        <p className="text-gray-400 text-sm mt-1">Tente novamente mais tarde.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {/* Grid 6 notícias */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {items.map((item, i) => (
+          <NoticiaCard key={item.link} item={item} index={i} />
+        ))}
+      </div>
+
+      {/* Botão Ver mais */}
+      <div className="mt-20 text-center">
+        <Link
+          href="/noticias"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-fuchsia-500 to-violet-600 text-white font-bold shadow-xl shadow-pink-500/20 hover:-translate-y-1 hover:shadow-pink-500/40 transition-all text-sm sm:text-base"
+        >
+          <FaNewspaper className="w-4 h-4" />
+          Ver todas as notícias
+          <FaArrowRight className="w-3.5 h-3.5" />
+        </Link>
+        <p className="mt-4 text-xs text-gray-400">
+          📡 Atualizado automaticamente via RSS da{" "}
+          <a href="https://www.gov.br/receitafederal/pt-br/assuntos/noticias" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:underline font-medium">
+            Receita Federal
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}

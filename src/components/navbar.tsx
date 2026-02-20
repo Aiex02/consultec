@@ -78,10 +78,10 @@ export default function Navbar() {
               Contato
             </Link>
             <Link
-              href="/agenda-tributaria"
+              href="/noticias"
               className="text-gray-700 hover:text-pink-600 font-medium transition-colors"
             >
-              Agenda Tributária
+              Notícias
             </Link>
           </nav>
 
@@ -124,7 +124,7 @@ export default function Navbar() {
               { href: '/#servicos', label: 'Serviços' },
               { href: '/#diferenciais', label: 'Diferenciais' },
               { href: '/#contato', label: 'Contato' },
-              { href: '/agenda-tributaria', label: 'Agenda Tributária' },
+              { href: '/noticias', label: 'Notícias' },
             ].map((item) => (
               <li key={item.href}>
                 <Link
@@ -140,6 +140,8 @@ export default function Navbar() {
           <div className="p-4">
             <a
               href="https://econtador.alterdata.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 px-5 py-3 text-white font-semibold shadow hover:opacity-95"
               onClick={() => setMobileOpen(false)}
             >
