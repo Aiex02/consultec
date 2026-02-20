@@ -273,7 +273,7 @@ export default function Noticias() {
                 Informações fornecidas pelo portal oficial da{" "}
                 <a href="https://www.gov.br/receitafederal/pt-br" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-900 font-medium">Receita Federal do Brasil</a>.
                 Consulte sempre um profissional de contabilidade.{" "}
-                <a href="/#contato" className="underline hover:text-blue-900 font-medium">Fale com nossa equipe.</a>
+                <Link href="/#contato" className="underline hover:text-blue-900 font-medium">Fale com nossa equipe.</Link>
               </p>
             </div>
           </div>
